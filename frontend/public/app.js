@@ -94,7 +94,7 @@
           return;
         }
         setTimeout(poll, 2000);
-      } catch (e) { // eslint-disable-line no-unused-vars
+      } catch (_e) {
         setTimeout(poll, 5000);
       }
     };
@@ -128,7 +128,7 @@
           '<span class="job-pct">' + pct + '%</span>';
       if (j.status === 'failed') {
         html += '<div class="job-error">' + escapeHtml(j.error || 'Unknown error') + '</div>' +
-                '<button class="retry-btn job-retry" data-job-id="' + escapeHtml(j.id) + '">Retry</button>';
+                '<button class="retry-btn job-retry" data-job-id="' + j.id + '">Retry</button>';
       }
       html += '</div>';
       return html;
