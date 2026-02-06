@@ -4,6 +4,7 @@ const http = require('http');
 
 // Set DATA_ROOT to a temp dir so tests don't write to /data
 process.env.DATA_ROOT = '/tmp/pms-test-data';
+process.env.PORT = '0';
 
 const { app, start } = require('../server');
 

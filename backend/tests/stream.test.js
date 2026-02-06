@@ -6,6 +6,7 @@ const path = require('path');
 
 const TEST_DATA = '/tmp/pms-test-stream-api';
 process.env.DATA_ROOT = TEST_DATA;
+process.env.PORT = '0';
 
 if (fs.existsSync(TEST_DATA)) {
   fs.rmSync(TEST_DATA, { recursive: true, force: true });

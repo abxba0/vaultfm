@@ -152,7 +152,7 @@
     navigator.mediaSession.setActionHandler('previoustrack', prevTrack);
     navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
     navigator.mediaSession.setActionHandler('seekto', (details) => {
-      if (details.seekTime != null) audio.currentTime = details.seekTime;
+      if (details.seekTime !== null && details.seekTime !== undefined) audio.currentTime = details.seekTime;
     });
   }
 

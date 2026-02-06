@@ -21,7 +21,7 @@ function download(url, outputDir, jobId) {
       '-f', 'bestaudio',
       '-x',
       '--audio-format', 'mp3',
-      '--audio-quality', '0',
+      '--audio-quality', '0', // 0 = best quality (VBR)
       '--embed-thumbnail',
       '--add-metadata',
       '--no-playlist',

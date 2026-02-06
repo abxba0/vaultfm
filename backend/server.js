@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 const config = require('./config/env');
 const paths = require('./config/paths');
 const logger = require('./utils/logger');
@@ -16,6 +17,15 @@ const authApi = require('./auth/google');
 
 const app = express();
 app.use(express.json());
+
+// ── Rate limiting ──────────────────────────────────────────────────────────
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/api/', apiLimiter);
 
 // Track server start time for uptime calculation
 const startTime = Date.now();
@@ -109,7 +119,8 @@ process.on('unhandledRejection', (reason) => {
 
 process.on('uncaughtException', (err) => {
   logger.error('Uncaught exception', { error: err.message, stack: err.stack });
-  // Don't exit - let the container restart policy handle it if needed
+  // Exit to allow the container restart policy to provide a clean restart
+  process.exit(1);
 });
 
 // ── Start server ───────────────────────────────────────────────────────────
