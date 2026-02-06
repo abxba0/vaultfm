@@ -5,8 +5,13 @@ const paths = require('./config/paths');
 const logger = require('./utils/logger');
 const JobQueue = require('./jobs/queue');
 const { processJob } = require('./jobs/processor');
+const DriveService = require('./services/drive');
+const LibraryManager = require('./storage/library');
 const downloadApi = require('./api/download');
 const jobsApi = require('./api/jobs');
+const libraryApi = require('./api/library');
+const streamApi = require('./api/stream');
+const authApi = require('./auth/google');
 
 const app = express();
 app.use(express.json());
@@ -23,11 +28,27 @@ function ensureDirectories() {
   logger.info('Data directories initialized', { root: paths.DATA_ROOT });
 }
 
+// ── Services ───────────────────────────────────────────────────────────────
+const driveService = new DriveService({
+  clientId: config.GOOGLE_CLIENT_ID,
+  clientSecret: config.GOOGLE_CLIENT_SECRET,
+  redirectUri: config.GOOGLE_REDIRECT_URI,
+});
+
+const libraryManager = new LibraryManager();
+
 // ── Job Queue setup ────────────────────────────────────────────────────────
 const jobQueue = new JobQueue({ concurrency: config.JOB_CONCURRENCY });
 jobQueue.setProcessor(processJob);
+
+// Wire dependencies
 downloadApi.setJobQueue(jobQueue);
 jobsApi.setJobQueue(jobQueue);
+libraryApi.setLibraryManager(libraryManager);
+libraryApi.setDriveService(driveService);
+streamApi.setLibraryManager(libraryManager);
+streamApi.setDriveService(driveService);
+authApi.setDriveService(driveService);
 
 // ── Health endpoint (no auth required) ─────────────────────────────────────
 app.get('/api/health', (_req, res) => {
@@ -35,8 +56,12 @@ app.get('/api/health', (_req, res) => {
 });
 
 // ── API routes ─────────────────────────────────────────────────────────────
+app.use('/api/auth', authApi.router);
 app.use('/api/download', downloadApi.router);
 app.use('/api/jobs', jobsApi.router);
+app.use('/api/library', libraryApi.router);
+app.use('/api/tracks', libraryApi.router);
+app.use('/api/stream', streamApi.router);
 
 // ── Start server ───────────────────────────────────────────────────────────
 let server;
@@ -54,4 +79,4 @@ if (require.main === module) {
   start();
 }
 
-module.exports = { app, start, jobQueue };
+module.exports = { app, start, jobQueue, libraryManager, driveService };
