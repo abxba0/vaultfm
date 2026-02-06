@@ -23,6 +23,11 @@
     </form>
   </div>
 
+  <div id="active-jobs" class="active-jobs" style="display:none">
+    <h3>Downloads</h3>
+    <div id="job-list"></div>
+  </div>
+
   <div class="search-bar">
     <input type="text" id="search" placeholder="Search tracks...">
   </div>
@@ -42,6 +47,10 @@
     </div>
   </div>
 
+  <div id="now-playing-hint" class="now-playing-hint">
+    <p>Select a track to start listening</p>
+  </div>
+
   <div class="player" id="player" style="display:none">
     <div class="player-info">
       <div class="player-meta">
@@ -52,6 +61,7 @@
     <div class="player-controls">
       <button id="prev-btn">⏮</button>
       <button class="play-btn" id="play-btn">▶</button>
+      <span class="player-loading" id="player-loading" style="display:none"></span>
       <button id="next-btn">⏭</button>
     </div>
     <div class="progress-bar">
