@@ -17,11 +17,14 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Install Node dependencies
-COPY package.json ./
+COPY backend/package.json backend/package-lock.json ./
 RUN npm install --omit=dev
 
-# Copy application code
-COPY . .
+# Copy backend application code
+COPY backend/ .
+
+# Copy frontend
+COPY frontend/ ../frontend/
 
 # Create data directories (will be overridden by volume mount)
 RUN mkdir -p /data/state /data/temp/downloads /data/logs
