@@ -3,6 +3,10 @@ const path = require('path');
 const fs = require('fs');
 const logger = require('../utils/logger');
 
+const DATA_ROOT = process.env.DATA_ROOT || '/data';
+const COOKIES_PATH = path.join(DATA_ROOT, 'cookies.txt');
+const CACHE_DIR = path.join(DATA_ROOT, 'yt-dlp-cache');
+
 /**
  * Download audio from a URL using yt-dlp.
  * @param {string} url - Source URL
@@ -13,11 +17,20 @@ const logger = require('../utils/logger');
 function download(url, outputDir, jobId) {
   return new Promise((resolve, reject) => {
     fs.mkdirSync(outputDir, { recursive: true });
+    fs.mkdirSync(CACHE_DIR, { recursive: true });
 
     // Output template: sanitize filename, limit length
     const outtmpl = path.join(outputDir, '%(title).200s.%(ext)s');
 
+    const hasCookies = fs.existsSync(COOKIES_PATH);
+    if (!hasCookies) {
+      logger.warn('No cookies.txt found — YouTube downloads may fail. Place a Netscape-format cookies.txt at data/cookies.txt');
+    }
+
     const args = [
+      '--js-runtimes', 'node',
+      '--cache-dir', CACHE_DIR,
+      ...(hasCookies ? ['--cookies', COOKIES_PATH] : []),
       '-f', 'bestaudio',
       '-x',
       '--audio-format', 'mp3',
