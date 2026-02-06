@@ -1,0 +1,360 @@
+:root {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --bg-card: #0f3460;
+  --text-primary: #e6e6e6;
+  --text-secondary: #a0a0b0;
+  --accent: #e94560;
+  --accent-hover: #ff6b81;
+  --border: #2a2a4a;
+  --player-bg: #0a0a1a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ── Header ───────────────────────────────────────────── */
+.header {
+  background: var(--bg-secondary);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.header .status {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* ── Search ───────────────────────────────────────────── */
+.search-bar {
+  padding: 12px 20px;
+  background: var(--bg-secondary);
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.search-bar input::placeholder {
+  color: var(--text-secondary);
+}
+
+.search-bar input:focus {
+  border-color: var(--accent);
+}
+
+/* ── Download Form ────────────────────────────────────── */
+.download-form {
+  padding: 12px 20px;
+  display: flex;
+  gap: 8px;
+}
+
+.download-form input {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.download-form button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.download-form button:hover {
+  background: var(--accent-hover);
+}
+
+.download-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Track List ───────────────────────────────────────── */
+.track-list {
+  padding: 0 0 120px 0;
+}
+
+.track-item {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.track-item:hover {
+  background: var(--bg-secondary);
+}
+
+.track-item.active {
+  background: var(--bg-card);
+}
+
+.track-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.track-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.track-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-artist {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.track-duration {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.track-delete {
+  margin-left: 8px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.track-delete:hover {
+  color: var(--accent);
+  background: rgba(233, 69, 96, 0.1);
+}
+
+/* ── Sort Controls ────────────────────────────────────── */
+.sort-controls {
+  padding: 8px 20px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.sort-controls button {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.sort-controls button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ── Player ───────────────────────────────────────────── */
+.player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--player-bg);
+  border-top: 1px solid var(--border);
+  padding: 12px 20px;
+  z-index: 200;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.player-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.player-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-artist {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+
+.player-controls button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+.player-controls button:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.player-controls .play-btn {
+  font-size: 2rem;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.progress-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-bar input[type="range"] {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+}
+
+.progress-bar input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+.progress-time {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  min-width: 35px;
+  text-align: center;
+}
+
+/* ── Empty State ──────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-state h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+/* ── Messages ─────────────────────────────────────────── */
+.message {
+  padding: 10px 20px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.message.success {
+  background: rgba(39, 174, 96, 0.2);
+  color: #27ae60;
+}
+
+.message.error {
+  background: rgba(233, 69, 96, 0.2);
+  color: var(--accent);
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (min-width: 768px) {
+  .track-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .header, .search-bar, .download-form, .sort-controls {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
