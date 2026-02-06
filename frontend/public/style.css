@@ -352,9 +352,204 @@ body {
     max-width: 800px;
     margin: 0 auto;
   }
-  .header, .search-bar, .download-form, .sort-controls {
+  .header, .search-bar, .download-form, .sort-controls, .active-jobs {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+/* ── Active Jobs ──────────────────────────────────────── */
+.active-jobs {
+  padding: 12px 20px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.active-jobs h3 {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+}
+
+.job-item {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.job-id {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+}
+
+.job-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.job-badge.job-status-queued {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+}
+
+.job-badge.job-status-processing {
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196f3;
+}
+
+.job-badge.job-status-completed {
+  background: rgba(39, 174, 96, 0.2);
+  color: #27ae60;
+}
+
+.job-badge.job-status-failed {
+  background: rgba(233, 69, 96, 0.2);
+  color: var(--accent);
+}
+
+.job-progress {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.job-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.job-item.job-status-completed .job-progress-fill {
+  background: #27ae60;
+}
+
+.job-item.job-status-failed .job-progress-fill {
+  background: var(--accent);
+}
+
+.job-pct {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.job-error {
+  font-size: 0.78rem;
+  color: var(--accent);
+  margin-top: 6px;
+  padding: 6px 8px;
+  background: rgba(233, 69, 96, 0.1);
+  border-radius: 4px;
+}
+
+.job-retry {
+  margin-top: 6px;
+}
+
+/* ── Library Loading ─────────────────────────────────── */
+.library-loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.library-loading p {
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Library Error ───────────────────────────────────── */
+.library-error {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.library-error h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+
+.library-error p {
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+/* ── Retry Button ────────────────────────────────────── */
+.retry-btn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.retry-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* ── Player Loading ──────────────────────────────────── */
+.player-loading {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--text-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+}
+
+/* ── Now Playing Hint ────────────────────────────────── */
+.now-playing-hint {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 14px 20px;
+  background: var(--player-bg);
+  border-top: 1px solid var(--border);
+  z-index: 200;
+}
+
+.now-playing-hint p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
 }
