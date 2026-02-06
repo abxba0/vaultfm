@@ -1,6 +1,6 @@
 // Environment configuration for PMS backend
 const config = {
-  PORT: parseInt(process.env.PORT, 10) || 3001,
+  PORT: process.env.PORT !== undefined ? parseInt(process.env.PORT, 10) : 3001,
   NODE_ENV: process.env.NODE_ENV || 'development',
   OWNER_EMAIL: process.env.OWNER_EMAIL || '',
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '',
