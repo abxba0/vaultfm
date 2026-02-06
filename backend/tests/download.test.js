@@ -96,4 +96,16 @@ describe('Download API', () => {
     assert.equal(res.status, 200);
     assert.ok(Array.isArray(res.body.jobs));
   });
+
+  it('GET /api/download/history returns sorted job list', async () => {
+    const res = await request('GET', '/api/download/history');
+    assert.equal(res.status, 200);
+    assert.ok(Array.isArray(res.body.jobs));
+    // Jobs should be sorted by createdAt descending
+    if (res.body.jobs.length > 1) {
+      const first = new Date(res.body.jobs[0].createdAt);
+      const second = new Date(res.body.jobs[1].createdAt);
+      assert.ok(first >= second, 'History should be sorted newest first');
+    }
+  });
 });

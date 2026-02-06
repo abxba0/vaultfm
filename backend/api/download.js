@@ -34,6 +34,16 @@ router.post('/', (req, res) => {
 });
 
 /**
+ * GET /api/download/history
+ * Recent download jobs.
+ */
+router.get('/history', (_req, res) => {
+  const jobs = jobQueue.getAllJobs()
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  res.json({ jobs });
+});
+
+/**
  * GET /api/download/:downloadId/status
  * Get status of a download job.
  */

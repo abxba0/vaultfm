@@ -144,4 +144,44 @@ describe('Streaming & Library API', () => {
     assert.equal(res.status, 200);
     assert.equal(res.body.success, true);
   });
+
+  it('GET /api/library/songs returns tracks array', async () => {
+    const res = await httpRequest('GET', '/api/library/songs');
+    assert.equal(res.status, 200);
+    assert.ok(Array.isArray(res.body.tracks));
+    assert.ok(res.body.tracks.length > 0);
+  });
+
+  it('GET /api/library/search?q= returns matching tracks', async () => {
+    const res = await httpRequest('GET', '/api/library/search?q=Stream');
+    assert.equal(res.status, 200);
+    assert.ok(Array.isArray(res.body.tracks));
+    assert.equal(res.body.tracks.length, 1);
+    assert.equal(res.body.tracks[0].title, 'Stream Test');
+  });
+
+  it('GET /api/library/search?q= returns empty for no match', async () => {
+    const res = await httpRequest('GET', '/api/library/search?q=nonexistent');
+    assert.equal(res.status, 200);
+    assert.ok(Array.isArray(res.body.tracks));
+    assert.equal(res.body.tracks.length, 0);
+  });
+
+  it('GET /api/library/search without q returns 400', async () => {
+    const res = await httpRequest('GET', '/api/library/search');
+    assert.equal(res.status, 400);
+    assert.equal(res.body.error.code, 'MISSING_QUERY');
+  });
+
+  it('GET /api/artwork/:songId returns 404 for existing track (stub)', async () => {
+    const res = await httpRequest('GET', '/api/artwork/track_test_stream');
+    assert.equal(res.status, 404);
+    assert.equal(res.body.error.code, 'NO_ARTWORK');
+  });
+
+  it('GET /api/artwork/:songId returns 404 for unknown track', async () => {
+    const res = await httpRequest('GET', '/api/artwork/nonexistent');
+    assert.equal(res.status, 404);
+    assert.equal(res.body.error.code, 'NOT_FOUND');
+  });
 });

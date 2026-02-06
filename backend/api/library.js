@@ -24,6 +24,30 @@ router.get('/', (_req, res) => {
 });
 
 /**
+ * GET /api/library/songs
+ * Retrieve the songs list (alias for /api/library).
+ */
+router.get('/songs', (_req, res) => {
+  const tracks = libraryManager.getAllTracks();
+  res.json({ tracks });
+});
+
+/**
+ * GET /api/library/search?q=
+ * Search tracks by query string.
+ */
+router.get('/search', (req, res) => {
+  const q = req.query.q;
+  if (!q || typeof q !== 'string') {
+    return res.status(400).json({
+      error: { code: 'MISSING_QUERY', message: 'Query parameter "q" is required' },
+    });
+  }
+  const results = libraryManager.search(q);
+  res.json({ tracks: results });
+});
+
+/**
  * GET /api/tracks/:trackId
  * Retrieve metadata for a single track.
  */
